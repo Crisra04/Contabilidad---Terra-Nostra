@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Contabilidad - Terra Nostra V 1.07.3</title>
+<meta name="theme-color" content="#0A1A2A">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="left"><button id="menuBtn" class="icon-btn" aria-label="Menú">☰</button></div>
+  <div class="title"><img src="icon-96.png" class="brand" alt="TN"> TN Contab</div>
+  <div class="actions">
+    <button id="themeToggle" class="icon-btn" title="Tema">🌙</button>
+    <button id="refreshBtn" class="icon-btn" title="Refrescar">⟳</button>
+  </div>
+</header>
+
+<aside class="drawer" id="drawer">
+  <div class="drawer-head">
+    <img src="icon-128.png" class="brand-icon"><div>Terra Nostra</div>
+    <button id="drawerClose" class="icon-btn">✕</button>
+  </div>
+  <nav class="drawer-nav">
+    <button class="nav-item active" data-tab="mov">Movimientos</button>
+    <button class="nav-item" data-tab="plan">Plan de Cuentas</button>
+    <button class="nav-item" data-tab="asientos">Asientos</button>
+    <button class="nav-item" data-tab="sumas">Sumas y Saldos</button>
+    <button class="nav-item" data-tab="settings">Ajustes</button>
+  </nav>
+</aside>
+<div id="scrim" class="scrim"></div>
+
+<main class="content">
+  <!-- Movimientos (legacy quick input that generates journal entries later) -->
+  <section id="tab-mov" class="tab">
+    <div class="card">
+      <h2>Movimientos rápidos</h2>
+      <p class="muted">Registra ingresos/gastos rápidos (se convertirán a asientos contables).</p>
+      <form id="quickForm" class="grid">
+        <label>Monto <input id="qAmount" type="number" step="0.01" required></label>
+        <label>Tipo
+          <select id="qType">
+            <option value="ingreso">Ingreso</option>
+            <option value="gasto">Gasto</option>
+          </select>
+        </label>
+        <label>Categoría <input id="qCat" list="catlist" placeholder="p.ej. Servicios, Alquileres"></label>
+        <datalist id="catlist"></datalist>
+        <label>Fecha <input id="qDate" type="date"></label>
+        <button class="btn gold" type="submit">Guardar</button>
+      </form>
+    </div>
+    <div class="card">
+      <div class="kpis">
+        <div class="kpi"><div class="kpi-label">Ventas</div><div class="kpi-value" data-kpi="ventas">0</div></div>
+        <div class="kpi"><div class="kpi-label">Costos</div><div class="kpi-value" data-kpi="costos">0</div></div>
+        <div class="kpi"><div class="kpi-label">OPEX</div><div class="kpi-value" data-kpi="opex">0</div></div>
+        <div class="kpi"><div class="kpi-label">Utilidad</div><div class="kpi-value" data-kpi="utilidad">0</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Plan de Cuentas (PUCT) -->
+  <section id="tab-plan" class="tab" hidden>
+    <div class="card">
+      <h2>Plan de Cuentas (PUCT)</h2>
+      <div class="row">
+        <input id="accSearch" placeholder="Buscar código o nombre">
+        <button class="btn ghost" id="reloadPUCT">Recargar PUCT</button>
+        <button class="btn ghost" id="exportPUCT">Exportar CSV</button>
+      </div>
+      <div class="row">
+        <label>Crear subcuenta (5º)<br>
+          <input id="newParent" placeholder="Padre 4º ej: 1.1.1.001">
+          <input id="newCode" placeholder="Nuevo 5º ej: 1.1.1.001.01">
+          <input id="newName" placeholder="Nombre subcuenta">
+        </label>
+        <button class="btn" id="addSub">Añadir</button>
+      </div>
+      <div id="accountsTable" class="table-scroll"></div>
+    </div>
+  </section>
+
+  <!-- Asientos -->
+  <section id="tab-asientos" class="tab" hidden>
+    <div class="card">
+      <h2>Asientos contables</h2>
+      <form id="jForm" class="grid">
+        <label>Fecha <input id="jDate" type="date"></label>
+        <label>Glosa <input id="jDesc" placeholder="Descripción"></label>
+        <div class="row">
+          <button class="btn" type="button" id="addLine">+ Línea</button>
+          <button class="btn gold" type="submit">Guardar asiento</button>
+          <button class="btn ghost" type="button" id="exportJournals">Exportar CSV</button>
+        </div>
+      </form>
+      <div id="linesBox"></div>
+      <div class="row"><b>Total Debe: <span id="totD">0</span></b> &nbsp; <b>Total Haber: <span id="totH">0</span></b> &nbsp; <span id="status" class="badge">-</span></div>
+      <div id="journalsTable" class="table-scroll"></div>
+    </div>
+  </section>
+
+  <!-- Sumas y Saldos -->
+  <section id="tab-sumas" class="tab" hidden>
+    <div class="card">
+      <h2>Balance de Sumas y Saldos</h2>
+      <div class="row">
+        <input id="ssPeriod" type="month">
+        <button class="btn" id="calcSS">Calcular</button>
+        <button class="btn ghost" id="exportSS">Exportar CSV</button>
+      </div>
+      <div id="ssTable" class="table-scroll"></div>
+    </div>
+  </section>
+
+  <!-- Ajustes -->
+  <section id="tab-settings" class="tab" hidden>
+    <div class="card">
+      <h2>Ajustes</h2>
+      <div class="row">
+        <button class="btn ghost" id="clearData">Borrar datos del sitio</button>
+        <button class="btn ghost" id="resetCache">Refrescar App</button>
+      </div>
+      <p class="muted">Versión 1.07.3 • PUCT integrado • SW con cache-bust.</p>
+    </div>
+  </section>
+</main>
+
+<nav class="bottombar">
+  <button class="btab active" data-tab="mov">📒</button>
+  <button class="btab" data-tab="plan">📚</button>
+  <button class="btab" data-tab="asientos">🧾</button>
+  <button class="btab" data-tab="sumas">📊</button>
+  <button class="btab" data-tab="settings">⚙️</button>
+</nav>
+
+<script>window.APP_VERSION="1.07.3";</script>
+<script src="app.js"></script>
+</body>
+</html>
