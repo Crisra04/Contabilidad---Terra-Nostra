@@ -1,0 +1,344 @@
+[
+  {
+    "code": "1.1.1.001",
+    "name": "CAJA",
+    "class": "1",
+    "level": 4
+  },
+  {
+    "code": "1.1.1.002",
+    "name": "BANCOS",
+    "class": "1",
+    "level": 4
+  },
+  {
+    "code": "1.1.2.001",
+    "name": "CUENTAS POR COBRAR",
+    "class": "1",
+    "level": 4
+  },
+  {
+    "code": "1.1.2.002",
+    "name": "DOCUMENTOS POR COBRAR",
+    "class": "1",
+    "level": 4
+  },
+  {
+    "code": "1.1.2.011",
+    "name": "ANTICIPOS POR COBRAR",
+    "class": "1",
+    "level": 4
+  },
+  {
+    "code": "1.1.2.013",
+    "name": "FONDOS A RENDIR",
+    "class": "1",
+    "level": 4
+  },
+  {
+    "code": "1.1.2.019",
+    "name": "OTRAS CUENTAS POR COBRAR",
+    "class": "1",
+    "level": 4
+  },
+  {
+    "code": "1.1.3.011",
+    "name": "BIENES INMUEBLES PARA LA VENTA",
+    "class": "1",
+    "level": 4
+  },
+  {
+    "code": "1.1.6.001",
+    "name": "IVA CRÉDITO FISCAL",
+    "class": "1",
+    "level": 4
+  },
+  {
+    "code": "1.1.6.005",
+    "name": "IT PAGADO POR ANTICIPADO",
+    "class": "1",
+    "level": 4
+  },
+  {
+    "code": "1.2.1.001",
+    "name": "CUENTAS POR COBRAR",
+    "class": "1",
+    "level": 4
+  },
+  {
+    "code": "1.2.1.002",
+    "name": "DOCUMENTOS POR COBRAR",
+    "class": "1",
+    "level": 4
+  },
+  {
+    "code": "1.2.1.009",
+    "name": "ANTICIPOS POR COBRAR",
+    "class": "1",
+    "level": 4
+  },
+  {
+    "code": "1.2.1.012",
+    "name": "OTRAS CUENTAS POR COBRAR",
+    "class": "1",
+    "level": 4
+  },
+  {
+    "code": "1.2.3.004",
+    "name": "MUEBLES Y ENSERES DE OFICINA",
+    "class": "1",
+    "level": 4
+  },
+  {
+    "code": "1.2.3.006",
+    "name": "EQUIPO DE COMPUTACIÓN",
+    "class": "1",
+    "level": 4
+  },
+  {
+    "code": "1.2.4.001",
+    "name": "DEPRECIACIÓN ACUMULADA BIENES DE USO",
+    "class": "1",
+    "level": 4
+  },
+  {
+    "code": "2.1.1.001",
+    "name": "PRÉSTAMOS FINANCIEROS POR PAGAR",
+    "class": "2",
+    "level": 4
+  },
+  {
+    "code": "2.1.2.003",
+    "name": "PRÉSTAMOS POR PAGAR",
+    "class": "2",
+    "level": 4
+  },
+  {
+    "code": "2.1.2.023",
+    "name": "OTRAS CUENTAS POR PAGAR",
+    "class": "2",
+    "level": 4
+  },
+  {
+    "code": "2.1.4.001",
+    "name": "IVA DÉBITO FISCAL",
+    "class": "2",
+    "level": 4
+  },
+  {
+    "code": "2.1.4.002",
+    "name": "RC-IVA RETENCIONES A DEPENDIENTES POR PAGAR",
+    "class": "2",
+    "level": 4
+  },
+  {
+    "code": "2.1.4.003",
+    "name": "RC-IVA RETENCIONES POR PAGAR",
+    "class": "2",
+    "level": 4
+  },
+  {
+    "code": "2.1.4.004",
+    "name": "IMPUESTO A LAS TRANSACCIONES POR PAGAR",
+    "class": "2",
+    "level": 4
+  },
+  {
+    "code": "2.1.4.005",
+    "name": "IT RETENCIONES POR PAGAR",
+    "class": "2",
+    "level": 4
+  },
+  {
+    "code": "2.1.4.006",
+    "name": "IMPUESTO SOBRE LAS UTILIDADES DE LAS EMPRESAS POR PAGAR",
+    "class": "2",
+    "level": 4
+  },
+  {
+    "code": "2.1.4.007",
+    "name": "IUE BENEFICIARIOS AL EXTERIOR POR PAGAR",
+    "class": "2",
+    "level": 4
+  },
+  {
+    "code": "2.1.4.008",
+    "name": "IUE RETENCIONES POR SERVICIOS POR PAGAR",
+    "class": "2",
+    "level": 4
+  },
+  {
+    "code": "2.2.1.001",
+    "name": "PRÉSTAMOS FINANCIEROS POR PAGAR",
+    "class": "2",
+    "level": 4
+  },
+  {
+    "code": "2.2.2.001",
+    "name": "CUENTAS POR PAGAR",
+    "class": "2",
+    "level": 4
+  },
+  {
+    "code": "2.2.2.003",
+    "name": "PRÉSTAMOS POR PAGAR",
+    "class": "2",
+    "level": 4
+  },
+  {
+    "code": "2.2.2.009",
+    "name": "OTRAS CUENTAS POR PAGAR",
+    "class": "2",
+    "level": 4
+  },
+  {
+    "code": "3.1.3.001",
+    "name": "RESULTADOS ACUMULADOS",
+    "class": "3",
+    "level": 4
+  },
+  {
+    "code": "4.1.1.002",
+    "name": "INGRESOS POR SERVICIOS",
+    "class": "4",
+    "level": 4
+  },
+  {
+    "code": "4.3.1.002",
+    "name": "INGRESOS POR ALQUILERES",
+    "class": "4",
+    "level": 4
+  },
+  {
+    "code": "4.3.1.006",
+    "name": "INGRESOS POR COMISIONES",
+    "class": "4",
+    "level": 4
+  },
+  {
+    "code": "5.2.1.001",
+    "name": "SUELDOS Y SALARIOS",
+    "class": "5",
+    "level": 4
+  },
+  {
+    "code": "5.2.1.006",
+    "name": "APORTES PATRONALES",
+    "class": "5",
+    "level": 4
+  },
+  {
+    "code": "5.2.1.010",
+    "name": "OTROS BENEFICIOS SOCIALES",
+    "class": "5",
+    "level": 4
+  },
+  {
+    "code": "5.2.2.001",
+    "name": "SERVICIO DE ENERGÍA ELÉCTRICA",
+    "class": "5",
+    "level": 4
+  },
+  {
+    "code": "5.2.2.002",
+    "name": "SERVICIO DE AGUA Y ALCANTARILLADO",
+    "class": "5",
+    "level": 4
+  },
+  {
+    "code": "5.2.2.003",
+    "name": "SERVICIO DE TELEFONÍA Y TELECOMUNICACIÓN",
+    "class": "5",
+    "level": 4
+  },
+  {
+    "code": "5.2.3.003",
+    "name": "SERVICIOS PROFESIONALES",
+    "class": "5",
+    "level": 4
+  },
+  {
+    "code": "5.2.3.005",
+    "name": "OTROS SERVICIOS PROFESIONALES Y DE OFICIOS",
+    "class": "5",
+    "level": 4
+  },
+  {
+    "code": "5.2.4.001",
+    "name": "DEPRECIACIONES BIENES DE USO",
+    "class": "5",
+    "level": 4
+  },
+  {
+    "code": "5.2.5.002",
+    "name": "IMPUESTO A LAS TRANSACCIONES",
+    "class": "5",
+    "level": 4
+  },
+  {
+    "code": "5.2.5.003",
+    "name": "IMPUESTO SOBRE LAS UTILIDADES DE LAS EMPRESAS",
+    "class": "5",
+    "level": 4
+  },
+  {
+    "code": "5.3.1.001",
+    "name": "SUELDOS Y SALARIOS",
+    "class": "5",
+    "level": 4
+  },
+  {
+    "code": "5.3.1.005",
+    "name": "COMISIONES SOBRE VENTAS",
+    "class": "5",
+    "level": 4
+  },
+  {
+    "code": "5.3.1.006",
+    "name": "APORTES PATRONALES",
+    "class": "5",
+    "level": 4
+  },
+  {
+    "code": "5.3.1.010",
+    "name": "OTROS BENEFICIOS SOCIALES",
+    "class": "5",
+    "level": 4
+  },
+  {
+    "code": "5.3.2.001",
+    "name": "SERVICIO DE ENERGÍA ELÉCTRICA",
+    "class": "5",
+    "level": 4
+  },
+  {
+    "code": "5.3.2.002",
+    "name": "SERVICIO DE AGUA Y ALCANTARILLADO",
+    "class": "5",
+    "level": 4
+  },
+  {
+    "code": "5.3.2.003",
+    "name": "SERVICIO DE TELEFONÍA Y TELECOMUNICACIÓN",
+    "class": "5",
+    "level": 4
+  },
+  {
+    "code": "5.3.4.002",
+    "name": "SERVICIOS PROFESIONALES",
+    "class": "5",
+    "level": 4
+  },
+  {
+    "code": "5.3.4.004",
+    "name": "OTROS SERVICIOS PROFESIONALES Y DE OFICIOS",
+    "class": "5",
+    "level": 4
+  },
+  {
+    "code": "5.3.5.001",
+    "name": "DEPRECIACIONES BIENES DE USO",
+    "class": "5",
+    "level": 4
+  }
+]

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Contabilidad - Terra Nostra V 1.07</title><meta name="theme-color" content="#0A1A2A">
+<link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-180.png">
+<link rel="stylesheet" href="styles.css"></head>
+<body>
+<header class="topbar"><button id="menuBtn" class="icon-btn">☰</button><div class="title"><img src="icon-96.png" style="width:22px;height:22px;border-radius:6px"> Contabilidad - Terra Nostra V 1.07</div><div class="actions"><button id="themeToggle" class="icon-btn" title="Tema">🌙</button><button id="closeMonth" class="btn ghost">Cerrar mes</button></div></header>
+<aside class="drawer" id="drawer"><div class="drawer-head"><img src="icon-128.png" class="brand-icon"><div class="brand-text">Terra Nostra</div><button id="drawerClose" class="icon-btn">✕</button></div>
+<nav class="drawer-nav"><button class="nav-item active" data-tab="mov">Movimientos</button><button class="nav-item" data-tab="debt">Deudas</button><button class="nav-item" data-tab="assets">Activos</button><button class="nav-item" data-tab="dash">Dashboard</button><button class="nav-item" data-tab="coa">Plan de Cuentas</button><button class="nav-item" data-tab="journals">Asientos</button><button class="nav-item" data-tab="trial">Sumas y Saldos</button><button class="nav-item" data-tab="settings">Ajustes</button></nav></aside>
+<div id="scrim" class="scrim"></div>
+<main class="content">
+
+<section class="tab" id="tab-mov">
+  <section class="card kpis">
+    <div class="kpi"><div class="kpi-label">Ventas</div><div class="kpi-value" data-kpi="ventas">0</div><div class="kpi-delta" data-delta="ventas"></div></div>
+    <div class="kpi"><div class="kpi-label">Costos</div><div class="kpi-value" data-kpi="costos">0</div><div class="kpi-delta" data-delta="costos"></div></div>
+    <div class="kpi"><div class="kpi-label">OPEX</div><div class="kpi-value" data-kpi="opex">0</div><div class="kpi-delta" data-delta="opex"></div></div>
+    <div class="kpi"><div class="kpi-label">Utilidad</div><div class="kpi-value" data-kpi="utilidad">0</div><div class="kpi-delta" data-delta="utilidad"></div></div>
+  </section>
+  <section class="card">
+    <div class="filters">
+      <input id="search" placeholder="Buscar...">
+      <select id="filterGroup"><option value="">Todos</option><option value="ventas">Ventas</option><option value="costos">Costos</option><option value="opex">OPEX</option><option value="financieros">Financieros</option><option value="activos">Activos</option><option value="patrimonio">Patrimonio</option></select>
+      <select id="filterDebt"><option value="">Todas las deudas</option></select>
+      <input type="date" id="dateFrom"><input type="date" id="dateTo">
+      <label class="switch"><input type="checkbox" id="compact"><span>Compacto</span></label>
+    </div>
+    <div class="table-toolbar"><button class="btn ghost" id="exportJson">Exportar JSON</button><button class="btn ghost" id="exportCsv">Exportar CSV</button><button class="btn ghost" id="exportPdf">Exportar PDF</button><label class="btn ghost file">Importar JSON<input type="file" id="importJson" accept="application/json"></label></div>
+    <div id="txTable" class="table-scroll"></div>
+  </section>
+</section>
+
+<section class="tab" id="tab-debt" hidden>
+  <section class="card"><h2>Deudas</h2>
+    <form id="debtForm" class="grid">
+      <label>Nombre<input id="debtName" required></label>
+      <label>Moneda<select id="debtCurrency"><option value="BOB">BOB</option><option value="USD">USD</option></select></label>
+      <label>TC (si USD)<input type="number" step="0.0001" id="debtFx" value="6.96"></label>
+      <label>Monto (capital)<input type="number" step="0.01" id="debtPrincipal"></label>
+      <label>Tasa anual (%)<input type="number" step="0.0001" id="debtRate" value="0"></label>
+      <label>Meses plazo<input type="number" id="debtTerm" value="0"></label>
+      <label>Inicio<input type="date" id="debtStart"></label>
+      <button class="btn" type="submit">Crear deuda</button>
+    </form>
+    <div id="debtTable" class="table-scroll"></div>
+  </section>
+  <section class="card"><h2>Cronograma de amortización</h2>
+    <div class="row"><select id="amortDebt"></select><button class="btn" id="genAmort">Generar cronograma</button><button class="btn ghost" id="postPayment">Registrar pago del mes</button></div>
+    <div id="amortTable" class="table-scroll"></div>
+  </section>
+</section>
+
+<section class="tab" id="tab-assets" hidden>
+  <section class="card"><h2>Activos & Depreciación</h2>
+    <form id="assetForm" class="grid">
+      <label>Nombre<input id="assetName" required></label>
+      <label>Costo (BOB)<input type="number" step="0.01" id="assetCost" required></label>
+      <label>Vida útil (meses)<input type="number" id="assetLife" value="36" required></label>
+      <label>Inicio depreciación<input type="date" id="assetStart" required></label>
+      <button class="btn" type="submit">Agregar activo</button>
+    </form>
+    <div class="row"><input type="month" id="depMonth"><button class="btn" id="calcDep">Calcular</button><button class="btn ghost" id="postDep">Registrar dep. mes</button></div>
+    <div id="assetTable" class="table-scroll"></div>
+  </section>
+</section>
+
+<section class="tab" id="tab-dash" hidden>
+  <section class="card"><h2>Dashboard</h2><div id="dashBox" class="kpi-grid"></div></section>
+</section>
+
+<section class="tab" id="tab-coa" hidden>
+  <section class="card"><h2>Plan de Cuentas (PUCT)</h2>
+    <div class="row">
+      <input id="coaSearch" placeholder="Buscar código o nombre...">
+      <button class="btn ghost" id="reloadPUCT">Recargar PUCT</button>
+      <button class="btn ghost" id="exportCoA">Exportar CSV</button>
+    </div>
+    <div id="coaTree" class="table-scroll"></div>
+    <details class="card" style="margin-top:10px">
+      <summary><b>Crear cuenta analítica (5º nivel)</b></summary>
+      <div class="grid"><label>Padre (4º nivel)<input id="coaParent" placeholder="Ej: 1111"></label><label>Código (5º nivel)<input id="coaCode" placeholder="Ej: 1111.01"></label><label>Nombre<input id="coaName" placeholder="Caja Oficina Central"></label></div>
+      <div class="row"><button class="btn" id="addAnalytic">Agregar subcuenta</button></div>
+      <p class="muted">Niveles 1–4 vienen del PUCT oficial y están bloqueados.</p>
+    </details>
+  </section>
+</section>
+
+<section class="tab" id="tab-journals" hidden>
+  <section class="card">
+    <h2>Asientos contables</h2>
+    <div class="row">
+      <button class="btn" id="newJournal">Nuevo asiento</button>
+      <button class="btn ghost" id="exportJournals">Exportar CSV</button>
+    </div>
+    <div id="journalsTable" class="table-scroll"></div>
+  </section>
+
+  <dialog id="journalModal" class="sheet">
+    <form method="dialog" id="journalForm">
+      <div class="sheet-head"><div class="sheet-title"><img src="icon-96.png" class="sheet-logo"><h3>Asiento</h3></div><button class="icon-btn" id="closeJournal">✕</button></div>
+      <div class="grid"><label>Fecha<input type="date" id="jDate"></label><label>Referencia<input id="jRef" placeholder="N° doc / glosa corta"></label></div>
+      <div id="jlLines" class="table-scroll" style="max-height:40vh"></div>
+      <div class="row" style="justify-content:space-between"><div class="muted">Total Debe: <b id="sumDebe">0.00</b> — Total Haber: <b id="sumHaber">0.00</b> — <b id="balStatus">Descuadrado</b></div><div><button class="btn ghost" id="addLine" type="button">+ Línea</button><button class="btn gold" id="saveJournal" value="default">Guardar</button></div></div>
+    </form>
+  </dialog>
+</section>
+
+<section class="tab" id="tab-trial" hidden>
+  <section class="card">
+    <h2>Balance de Sumas y Saldos</h2>
+    <div class="row"><input type="month" id="tbMonth"><button class="btn" id="runTrial">Calcular</button><button class="btn ghost" id="exportTrial">Exportar CSV</button></div>
+    <div id="trialTable" class="table-scroll"></div>
+  </section>
+</section>
+
+<section class="tab" id="tab-settings" hidden>
+  <section class="card"><h2>Ajustes</h2><div class="row"><button class="btn ghost" id="resetCache">Refrescar PWA</button><button class="btn ghost" id="createBackup">Crear backup</button><button class="btn ghost" id="restoreBackup">Restaurar último</button></div><p class="muted">Versión 1.07. Núcleo contable PUCT + Asientos + Sumas y Saldos.</p></section>
+</section>
+
+</main>
+<button class="fab" id="fab">＋</button>
+<nav class="bottombar">
+  <button class="btab active" data-tab="mov" title="Movs">📒</button>
+  <button class="btab" data-tab="debt" title="Deudas">💳</button>
+  <button class="btab" data-tab="assets" title="Activos">📦</button>
+  <button class="btab" data-tab="dash" title="Dash">📊</button>
+  <button class="btab" data-tab="coa" title="Cuentas">📚</button>
+  <button class="btab" data-tab="journals" title="Asientos">🧾</button>
+  <button class="btab" data-tab="trial" title="Sumas y Saldos">🧮</button>
+  <button class="btab" data-tab="settings" title="Ajustes">⚙️</button>
+</nav>
+<dialog id="movModal" class="sheet"><form method="dialog" id="txForm"><div class="sheet-head"><div class="sheet-title"><img src="icon-96.png" class="sheet-logo"><h3>Nuevo movimiento</h3></div><button class="icon-btn" id="closeModal">✕</button></div><div id="tplChips" class="chips"></div><div class="grid">
+<label>Monto<input type="number" step="0.01" id="amount" required></label><label>Tipo<select id="type"><option value="ingreso">Ingreso</option><option value="gasto">Gasto</option><option value="inversion">Inversión/Activo</option><option value="financiacion">Financiación</option></select></label><label>Grupo<select id="group"><option value="ventas">Ventas</option><option value="costos">Costo de ventas</option><option value="opex">Gastos operativos</option><option value="financieros">Financieros</option><option value="activos">Activos fijos</option><option value="patrimonio">Patrimonio</option></select></label>
+<label>Categoría<input id="category" list="catlist" required></label><datalist id="catlist"></datalist><label>Moneda<select id="currency"><option value="BOB">BOB</option><option value="USD">USD</option></select></label><label>TC (BOB/USD)<input type="number" step="0.0001" id="fx" value="6.96"></label>
+<label>Fecha<input type="date" id="date"></label><label>Deuda<select id="debtId"><option value="">— Ninguna —</option></select></label><label class="checkbox"><input type="checkbox" id="isInterest"> Es interés de deuda</label></div>
+<label>Notas<textarea id="notes" rows="2" placeholder="detalle, proveedor, n° factura"></textarea></label><div class="row sheet-foot"><input id="tplName" placeholder="Nombre plantilla"><button class="btn ghost" type="button" id="saveTemplate">Guardar plantilla</button><button class="btn gold" value="default" id="saveTx">Guardar</button></div></form></dialog>
+<div id="toast" class="toast" hidden>Guardado</div>
+<script>window.APP_VERSION="1.07"; window.APP_TITLE="Contabilidad - Terra Nostra V 1.07";</script><script src="app.js"></script></body></html>
