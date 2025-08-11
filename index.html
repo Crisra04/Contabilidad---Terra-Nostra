@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>Ledger Lite — TN Pro Dynamic</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0A1A2A">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">TN</div>
+      <div class="brand-text">Terra Nostra</div>
+    </div>
+    <nav class="nav">
+      <button class="nav-item active" data-tab="mov" title="Movimientos">
+        <span class="icon">💼</span><span class="label">Movimientos</span>
+      </button>
+      <button class="nav-item" data-tab="debt" title="Deudas">
+        <span class="icon">💳</span><span class="label">Deudas</span>
+      </button>
+      <button class="nav-item" data-tab="assets" title="Activos">
+        <span class="icon">🖥️</span><span class="label">Activos</span>
+      </button>
+      <button class="nav-item" data-tab="dash" title="Dashboard">
+        <span class="icon">📊</span><span class="label">Dashboard</span>
+      </button>
+      <button class="nav-item" data-tab="settings" title="Ajustes">
+        <span class="icon">⚙️</span><span class="label">Ajustes</span>
+      </button>
+    </nav>
+    <div class="sidebar-foot">
+      <button id="installBtn" class="btn ghost small">Instalar</button>
+    </div>
+  </aside>
+
+  <header class="topbar">
+    <div class="title">Ledger Lite — <span>Pro Dynamic</span></div>
+    <div class="actions">
+      <button id="quickAdd" class="btn gold">+ Nuevo</button>
+    </div>
+  </header>
+
+  <main class="content">
+    <!-- MOVIMIENTOS -->
+    <section class="tab" id="tab-mov">
+      <div class="cards">
+        <section class="card kpis">
+          <div class="kpi">
+            <div class="kpi-label">Ventas</div>
+            <div class="kpi-value" data-kpi="ventas">0</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">Costos</div>
+            <div class="kpi-value" data-kpi="costos">0</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">OPEX</div>
+            <div class="kpi-value" data-kpi="opex">0</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">Utilidad</div>
+            <div class="kpi-value" data-kpi="utilidad">0</div>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-head">
+            <h2>Movimientos</h2>
+            <div class="filters">
+              <input id="search" placeholder="Buscar...">
+              <select id="filterTag"></select>
+              <select id="filterGroup">
+                <option value="">Todos</option>
+                <option value="ventas">Ventas</option>
+                <option value="costos">Costos</option>
+                <option value="opex">OPEX</option>
+                <option value="financieros">Financieros</option>
+                <option value="activos">Activos</option>
+                <option value="patrimonio">Patrimonio</option>
+              </select>
+              <select id="filterDebt"><option value="">Todas las deudas</option></select>
+              <button class="btn ghost" id="exportJson">Exportar JSON</button>
+              <button class="btn ghost" id="exportCsv">Exportar CSV</button>
+              <label class="btn ghost file">Importar JSON<input type="file" id="importJson" accept="application/json"></label>
+            </div>
+          </div>
+          <div id="txTable" class="table-scroll"></div>
+        </section>
+      </div>
+    </section>
+
+    <!-- DEUDAS -->
+    <section class="tab" id="tab-debt" hidden>
+      <section class="card">
+        <div class="card-head">
+          <h2>Deudas</h2>
+        </div>
+        <form id="debtForm" class="grid">
+          <label>Nombre<input id="debtName" placeholder="Acreedor / Préstamo" required></label>
+          <label>Moneda<select id="debtCurrency"><option value="BOB">BOB</option><option value="USD">USD</option></select></label>
+          <label>TC (si USD)<input type="number" step="0.0001" id="debtFx" value="6.96"></label>
+          <label>Monto (capital)<input type="number" step="0.01" id="debtPrincipal"></label>
+          <label>Tasa anual (%)<input type="number" step="0.0001" id="debtRate" value="0"></label>
+          <label>Meses plazo<input type="number" id="debtTerm" value="0"></label>
+          <label>Inicio<input type="date" id="debtStart"></label>
+          <button class="btn" type="submit">Crear deuda</button>
+        </form>
+        <div id="debtTable" class="table-scroll"></div>
+      </section>
+      <section class="card">
+        <div class="card-head"><h2>Cronograma de amortización</h2></div>
+        <div class="row">
+          <select id="amortDebt"></select>
+          <button class="btn" id="genAmort">Generar cronograma</button>
+          <button class="btn ghost" id="postPayment">Registrar pago del mes</button>
+        </div>
+        <div id="amortTable" class="table-scroll"></div>
+      </section>
+    </section>
+
+    <!-- ACTIVOS -->
+    <section class="tab" id="tab-assets" hidden>
+      <section class="card">
+        <div class="card-head">
+          <h2>Activos & Depreciación</h2>
+        </div>
+        <form id="assetForm" class="grid">
+          <label>Nombre<input id="assetName" required placeholder="Cámara, Dron, Laptop"></label>
+          <label>Costo (BOB)<input type="number" step="0.01" id="assetCost" required></label>
+          <label>Vida útil (meses)<input type="number" id="assetLife" value="36" required></label>
+          <label>Inicio depreciación<input type="date" id="assetStart" required></label>
+          <button class="btn" type="submit">Agregar activo</button>
+        </form>
+        <div class="row">
+          <input type="month" id="depMonth">
+          <button class="btn" id="calcDep">Calcular depreciación</button>
+          <button class="btn ghost" id="postDep">Registrar depreciación del mes</button>
+        </div>
+        <div id="assetTable" class="table-scroll"></div>
+      </section>
+    </section>
+
+    <!-- DASHBOARD -->
+    <section class="tab" id="tab-dash" hidden>
+      <section class="card">
+        <div class="card-head"><h2>Dashboard por proyecto</h2></div>
+        <div class="row">
+          <select id="dashTag"></select>
+          <input type="month" id="dashMonth">
+          <button class="btn" id="dashCalc">Recalcular</button>
+        </div>
+        <div id="dashBox" class="kpi-grid"></div>
+      </section>
+    </section>
+
+    <!-- AJUSTES -->
+    <section class="tab" id="tab-settings" hidden>
+      <section class="card">
+        <div class="card-head"><h2>Ajustes</h2></div>
+        <div class="row">
+          <label class="checkbox"><input type="checkbox" id="lockTax"> Bloquear categorías y tags</label>
+          <button class="btn ghost" id="editTax">Editar taxonomía</button>
+          <button class="btn ghost" id="resetCache">Refrescar PWA</button>
+        </div>
+        <div id="taxEditor" hidden class="grid-2">
+          <div>
+            <label>Categorías</label>
+            <textarea id="taxCats" rows="12" placeholder="Una por línea"></textarea>
+          </div>
+          <div>
+            <label>Tags</label>
+            <textarea id="taxTags" rows="12" placeholder="Una por línea"></textarea>
+          </div>
+          <button class="btn" id="saveTax">Guardar taxonomía</button>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <!-- MODAL NUEVO MOVIMIENTO / BOTTOM SHEET -->
+  <dialog id="movModal" class="sheet">
+    <form method="dialog" id="txForm">
+      <div class="sheet-head">
+        <h3>Nuevo movimiento</h3>
+        <button class="icon-btn" id="closeModal" title="Cerrar">✕</button>
+      </div>
+      <div class="grid">
+        <label>Monto<input type="number" step="0.01" id="amount" required></label>
+        <label>Tipo<select id="type" required>
+          <option value="ingreso">Ingreso</option>
+          <option value="gasto">Gasto</option>
+          <option value="inversion">Inversión/Activo</option>
+          <option value="financiacion">Financiación</option></select>
+        </label>
+        <label>Grupo<select id="group" required>
+          <option value="ventas">Ventas</option>
+          <option value="costos">Costo de ventas</option>
+          <option value="opex">Gastos operativos</option>
+          <option value="financieros">Financieros</option>
+          <option value="activos">Activos fijos</option>
+          <option value="patrimonio">Patrimonio</option></select>
+        </label>
+        <label>Categoría<input id="category" list="catlist" placeholder="Meta Ads, Comisiones, Sueldos" required></label>
+        <datalist id="catlist"></datalist>
+        <label>Tag<input id="tag" list="taglist" placeholder="Homservi, Terra Nostra, Nexo"></label>
+        <datalist id="taglist"></datalist>
+        <label>Moneda<select id="currency"><option value="BOB">BOB</option><option value="USD">USD</option></select></label>
+        <label>TC (BOB/USD)<input type="number" step="0.0001" id="fx" value="6.96"></label>
+        <label>Fecha<input type="date" id="date"></label>
+        <label>Deuda<select id="debtId"><option value="">— Ninguna —</option></select></label>
+        <label class="checkbox"><input type="checkbox" id="isInterest"> Es interés de deuda</label>
+      </div>
+      <label>Notas<textarea id="notes" rows="2" placeholder="detalle, proveedor, n° factura"></textarea></label>
+      <div class="row sheet-foot">
+        <select id="templateSel"></select>
+        <button class="btn ghost" type="button" id="saveTemplate">Guardar como plantilla</button>
+        <button class="btn ghost" type="button" id="applyTemplate">Aplicar plantilla</button>
+        <button class="btn gold" value="default" id="saveTx">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast" hidden>Guardado</div>
+
+  <script src="app.js"></script>
+</body>
+</html>
