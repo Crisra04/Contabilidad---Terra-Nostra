@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contabilidad - Terra Nostra V 1.07.2 (Safe Boot)</title>
+<meta name="theme-color" content="#0A1A2A">
+<link rel="manifest" href="manifest.json">
+<style>
+  :root{--navy:#0A1A2A;--gold:#D4AF37;--bg:#0c1624}
+  *{box-sizing:border-box} html,body{height:100%} body{margin:0;font-family:system-ui,Segoe UI,Roboto;background:linear-gradient(180deg,var(--navy),var(--bg));color:#fff}
+  .top{position:sticky;top:0;display:flex;gap:8px;align-items:center;padding:10px 12px;background:rgba(10,26,42,.9);border-bottom:1px solid rgba(212,175,55,.3)}
+  .title{font-weight:800;letter-spacing:.3px}
+  .content{padding:10px}
+  nav.btm{position:fixed;left:0;right:0;bottom:0;display:flex;gap:6px;padding:8px 10px;background:rgba(10,26,42,.95);border-top:1px solid rgba(212,175,55,.35)}
+  .tabbtn{flex:1;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;border-radius:12px;padding:10px 0;font-size:16px}
+  .tabbtn.active{border-color:rgba(212,175,55,.7);background:linear-gradient(180deg,rgba(212,175,55,.2),rgba(255,255,255,.05))}
+  .card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:12px;margin-bottom:12px}
+  .muted{opacity:.8}
+</style>
+</head>
+<body>
+<header class="top"><div class="title">TN Safe Boot 1.07.2</div><div id="jsok" class="muted">JS…</div></header>
+<main class="content">
+<section id="t1" class="card"><h3>Movimientos</h3><p>Si ves esto al cambiar de pestañas, el JS funciona.</p></section>
+<section id="t2" class="card" hidden><h3>Deudas</h3><p>Demo.</p></section>
+<section id="t3" class="card" hidden><h3>Activos</h3><p>Demo.</p></section>
+<section id="t4" class="card" hidden><h3>Dashboard</h3><p>Demo.</p></section>
+<section id="t5" class="card" hidden><h3>Ajustes</h3><button id="wipe" class="tabbtn">Borrar datos del sitio</button></section>
+</main>
+<nav class="btm">
+  <button class="tabbtn active" data-tab="t1">📒</button>
+  <button class="tabbtn" data-tab="t2">💳</button>
+  <button class="tabbtn" data-tab="t3">📦</button>
+  <button class="tabbtn" data-tab="t4">📊</button>
+  <button class="tabbtn" data-tab="t5">⚙️</button>
+</nav>
+<script>
+  // JS health indicator
+  document.getElementById('jsok').textContent='JS OK';
+  // Simple tab navigation
+  document.querySelectorAll('.tabbtn').forEach(btn=>btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tabbtn').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
+    const id = btn.dataset.tab; document.querySelectorAll('main > section').forEach(s=>s.hidden = (s.id!==id));
+  }));
+  // Wipe site data helper
+  document.getElementById('wipe').addEventListener('click', async ()=>{
+    if(confirm('Borrar caché y almacenamiento de este sitio?')){
+      try{
+        localStorage.clear(); sessionStorage.clear();
+        if('caches' in window){ const keys = await caches.keys(); for(const k of keys) await caches.delete(k); }
+        alert('Listo. Recarga la página.');
+      }catch(e){ alert('Error borrando: '+e); }
+    }
+  });
+  // No service worker here on purpose (to bypass stuck caches)
+</script>
+</body>
+</html>
