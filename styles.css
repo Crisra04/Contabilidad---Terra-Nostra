@@ -1,0 +1,13 @@
+
+/* Terra Nostra V 1.07.4 visual polish */
+:root{
+  --gold:#d4af37; --navy:#0a1a2a; --bg:#0f2032;
+}
+body{ background: radial-gradient(1000px 600px at 80% -10%, rgba(212,175,55,.10), transparent 60%), linear-gradient(180deg, var(--navy), var(--bg)); color:#e9eef5; }
+.card{ border:1px solid rgba(255,255,255,.10); background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); border-radius:16px; }
+input:focus, select:focus, textarea:focus{ outline:none; border-color:rgba(212,175,55,.65)!important; box-shadow:0 0 0 3px rgba(212,175,55,.25) }
+.bottombar{ position:fixed; left:0; right:0; bottom:0; display:flex; gap:8px; padding:10px; background:rgba(10,26,42,.9); border-top:1px solid rgba(212,175,55,.25); backdrop-filter:blur(8px) }
+.bottombar .btab{ flex:1; height:44px; border-radius:12px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.06); color:#fff; }
+.bottombar .btab.active{ border-color:rgba(212,175,55,.6); background:linear-gradient(180deg, rgba(212,175,55,.18), rgba(255,255,255,.04)); }
+.toast{ position:fixed; left:50%; transform:translateX(-50%); bottom:82px; background:#111a; padding:10px 14px; border-radius:10px; opacity:0; transition:.2s; border:1px solid rgba(255,255,255,.15) }
+.toast.show{ opacity:1 }
